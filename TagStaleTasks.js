@@ -29,17 +29,3 @@ for (i=0; i < tasks.length; i++) {
     task.tagNames = tags.join(',')
   }
 }
-
-// untag tasks modified since the cut off date previously marked as stale
-// tasks = Things.tags.byName("Stale").toDos.whose({modificationDate: {'>=': targetDate}})
-// console.log("Removing stale tags on " + tasks.length + " tasks")
-// for (i=0; i < tasks.length; i++) {
-// 	task = tasks[i]
-//   tags = task.tagNames().split(',')
-//   indexOfStaleTag = tags.indexOf(STALE_TAG)
-//   if (indexOfStaleTag != -1) {
-//     tags.splice(indexOfStaleTag, 1)
-//     console.log("Updating tags for '" + task.name() + "': ", tags)
-//     task.tagNames = tags.join(',')
-//   }
-// }
