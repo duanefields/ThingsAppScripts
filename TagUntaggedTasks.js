@@ -11,7 +11,8 @@ Things = Application('Things3')
 // create the tag, if it doesn't already exist
 untaggedTag = Things.Tag({name: UNTAGGED_TAG})
 Things.tags.push(untaggedTag)
-console.log("There are currently " + untaggedTag.toDos.length + " tasks tagged as " + UNTAGGED_TAG)
+
+console.log(`There are ${untaggedTag.toDos.length} tasks tagged as ${UNTAGGED_TAG}`)
 
 // if there are no real (unignored) tags
 hasNoMeaningfulTags = (tags) => {
@@ -28,7 +29,7 @@ for (var i=0; i < tasks.length; i++) {
 	tags = task.tagNames().split(',').filter(tag => tag.length > 0)
 	markedUntagged = tags.indexOf(UNTAGGED_TAG) !== -1
 
-	console.log(`Examining task $'{task.name()}' (${task.status()}) with tags ${JSON.stringify(tags)}`)
+	console.log(`Examining task '${task.name()}' (${task.status()}) with tags ${JSON.stringify(tags)}`)
 
 	if (hasNoMeaningfulTags(tags)) {
 		if (! markedUntagged) {
@@ -46,4 +47,4 @@ for (var i=0; i < tasks.length; i++) {
 	}
 }
 
-"Script complete"
+console.log(`There are now ${untaggedTag.toDos.length} tasks tagged as ${UNTAGGED_TAG}`)
