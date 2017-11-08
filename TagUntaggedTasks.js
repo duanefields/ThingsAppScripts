@@ -20,8 +20,8 @@ hasNoMeaningfulTags = (tags) => {
 	return nonIgnoredTags.length === 0
 }
 date = new Date()
-tasks = Things.toDos().filter(task => task.status() === 'open')
-//tasks = Things.lists.byName('Inbox').toDos //.whose({status: 'open'})
+// tasks = Things.toDos().filter(task => task.status() === 'open') // all open tasks
+tasks = Things.lists.byName('Inbox').toDos // just inbox
 
 console.log(`Examining ${tasks.length} open tasks...`)
 for (var i=0; i < tasks.length; i++) {
