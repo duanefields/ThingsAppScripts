@@ -21,7 +21,6 @@ end joinList
 to splitString(aString, delimiter)
  set retVal to {}
  set prevDelimiter to AppleScript's text item delimiters
- log delimiter
  set AppleScript's text item delimiters to {delimiter}
  set retVal to every text item of aString
  set AppleScript's text item delimiters to prevDelimiter
