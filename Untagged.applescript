@@ -31,31 +31,43 @@ on tagUntagged()
   tell application "Things3"
     -- make the tag if it doesn't exist and get a reference to it, free to move it around later
     set untaggedTag to make new tag with properties { name:"Untagged" }
+    set untaggedTagName to name of untaggedTag
 
     repeat with task in to dos of list "Anytime"
       if class of task is not project then
         set taskTags to tags of task
-        set tagNames to tag names of task
-        set taskId to id of task
 
+        -- inherit project tags, if any
+        -- if task's project is not missing value then
+        --   set taskTags to taskTags & tags of task's project
+        -- end if
+
+        -- no tags on either the project or task, so we tag as untagged
         if count of taskTags is 0 then
           log "Marking as Untagged: " & name of task & ", " & count of tags of task & " tags [" & tag names of task & "]"
           set newTagNames to tag names of task & "," & name of untaggedTag
           set tag names of task to newTagNames
 
+        -- remove untagged tag if present
         else if count of taskTags is greater than 1 then
           set tagNameList to my splitString(tag names of task, ", ")
           set newTagNameList to {}
-          repeat with i from 1 to length of tagNameList
-            set tagName to item i of tagNameList
-            if tagName does not equal name of untaggedTag
-              set newTagNameList's end to tagName
-            end if
-          end repeat
-          set tagNameList to my joinList(newTagNameList, ",")
-          set task's tag names to tagNameList
-          log "Removing Untagged: " & name of task & ", " & count of tags of task & " tags [" & tag names of task & "]"
+
+          if tagNameList contains untaggedTagName
+          -- make a new list, removing the untagged tag
+            repeat with i from 1 to length of tagNameList
+              set tagName to item i of tagNameList
+              if tagName does not equal untaggedTagName
+                set newTagNameList's end to tagName
+              end if
+            end repeat
+
+            set tagNameList to my joinList(newTagNameList, ",")
+            set task's tag names to tagNameList
+            log "Removing Untagged: " & name of task & ", " & count of tags of task & " tags [" & tag names of task & "]"
+          end if
         end if
+
       end if
     end repeat
   end tell
