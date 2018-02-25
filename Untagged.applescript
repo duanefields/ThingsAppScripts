@@ -36,6 +36,8 @@ on tagUntagged()
     repeat with task in to dos of list "Anytime"
       if class of task is not project then
         set taskTags to tags of task
+        set taskName to name of task
+        set taskTagCount to count of taskTags
 
         -- inherit project tags, if any
         -- if task's project is not missing value then
@@ -43,28 +45,18 @@ on tagUntagged()
         -- end if
 
         -- no tags on either the project or task, so we tag as untagged
-        if count of taskTags is 0 then
-          log "Marking as Untagged: " & name of task & ", " & count of tags of task & " tags [" & tag names of task & "]"
-          set newTagNames to tag names of task & "," & name of untaggedTag
+        if taskTagCount is 0 then
+          log "Adding Untagged: " & taskName & ", " & taskTagCount & " tags [" & tag names of task & "]"
+          set newTagNames to tag names of task & "," & untaggedTagName
           set tag names of task to newTagNames
 
         -- remove untagged tag if present
-        else if count of taskTags is greater than 1 then
-          set tagNameList to my splitString(tag names of task, ", ")
-          set newTagNameList to {}
-
-          if tagNameList contains untaggedTagName
-          -- make a new list, removing the untagged tag
-            repeat with i from 1 to length of tagNameList
-              set tagName to item i of tagNameList
-              if tagName does not equal untaggedTagName
-                set newTagNameList's end to tagName
-              end if
-            end repeat
-
-            set tagNameList to my joinList(newTagNameList, ",")
-            set task's tag names to tagNameList
-            log "Removing Untagged: " & name of task & ", " & count of tags of task & " tags [" & tag names of task & "]"
+        else if taskTagCount is greater than 1 then
+          set otherTagNames to name of task's tags whose name is not untaggedTagName
+          if count of otherTagNames is less than taskTagCount then
+            set newTagNames to my joinList(otherTagNames, ",")
+            log "Removing Untagged: " & taskName & ", " & taskTagCount & " tags [" & tag names of task & "]"
+            set task's tag names to newTagNames
           end if
         end if
 
