@@ -19,6 +19,8 @@ console.log(JSON.stringify(somedayList.properties()))
 // TODO use a filter to get all but the first project
 projects.forEach(p => {
   console.log(p.name())
+  console.log(Object.getOwnPropertyNames(p));
+
   for (let [index, todo] of p.toDos().entries()) {
     // TODO this approach doesn't seem to return someday items, so only works the first time
     if (todo.status() === 'open') {
@@ -30,7 +32,7 @@ projects.forEach(p => {
         //Things.move(todo, {to: {name:"Someday"}})
         //Things.move(todo, {to:"Someday"})
         //Things.move({todo:todo, to:somedayList})
-        todo.move({to:somedayList})
+        //todo.move({to:somedayList})
       }
     }
   }
